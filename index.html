@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cloudfly.shop – Smart Deals & Top Amazon Picks (USA)</title>
+  <meta name="description" content="Discover the best Amazon deals, top-rated products and smart buys for US shoppers. Updated daily – cloudfly.shop"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary:    #1e40af;       /* deep blue */
+      --primary-d:  #1e3a8a;
+      --accent:     #f59e0b;       /* warm gold/orange */
+      --red:        #dc2626;
+      --gray-50:    #fafafa;
+      --gray-100:   #f5f5f5;
+      --gray-200:   #e5e5e5;
+      --gray-600:   #525252;
+      --gray-800:   #1e293b;
+      --black:      #0f172a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--gray-50);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid var(--gray-200);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+
+    .trust-bar {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 9px 0;
+      font-size: 0.93rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .search-box {
+      flex: 1;
+      max-width: 620px;
+      margin: 0 40px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 20px 14px 52px;
+      border: 1px solid #d1d5db;
+      border-radius: 50px;
+      font-size: 1.03rem;
+      transition: all 0.25s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(30,64,175,0.12);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+    }
+
+    main {
+      padding: 40px 0 80px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 12px;
+      color: var(--black);
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--gray-600);
+      font-size: 1.18rem;
+      max-width: 720px;
+      margin: 0 auto 40px;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+
+    .filter-btn {
+      padding: 10px 24px;
+      border-radius: 50px;
+      border: 1px solid #d1d5db;
+      background: white;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.22s;
+      font-size: 0.97rem;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+      gap: 28px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--gray-200);
+      transition: all 0.28s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 35px -10px rgba(0,0,0,0.11);
+      border-color: rgba(30,64,175,0.3);
+    }
+
+    .product-image-wrap {
+      height: 280px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .product-image {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .product-body {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .deal-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--red);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .product-title {
+      font-size: 1.08rem;
+      font-weight: 600;
+      line-height: 1.38;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .price-block {
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+    .current-price {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    .was-price {
+      color: #6b7280;
+      text-decoration: line-through;
+      margin-left: 10px;
+      font-size: 1.1rem;
+    }
+
+    .view-deal-btn {
+      margin-top: 16px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1.03rem;
+      cursor: pointer;
+      transition: all 0.22s;
+      width: 100%;
+    }
+
+    .view-deal-btn:hover {
+      background: var(--primary-d);
+      transform: translateY(-1px);
+    }
+
+    footer {
+      background: var(--black);
+      color: #d1d5db;
+      text-align: center;
+      padding: 48px 20px 32px;
+      margin-top: 80px;
+      font-size: 0.92rem;
+    }
+
+    .disclaimer {
+      margin-top: 20px;
+      font-size: 0.84rem;
+      opacity: 0.75;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 900px) {
+      .search-box { margin: 20px 0; max-width: none; }
+      nav { flex-direction: column; align-items: stretch; }
+      h1 { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="trust-bar">
+  ✓ Amazon Associate • We earn from qualifying purchases • Real-time US pricing & availability
+</div>
+
+<header>
+  <div class="container">
+    <nav>
+      <a href="#" class="logo">cloudfly<span>.shop</span></a>
+
+      <div class="search-box">
+        <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="search" class="search-input" placeholder="Search Amazon deals, electronics, home..." id="search">
+      </div>
+
+      <div>🛍️ Cart</div>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <h1>Best Amazon Deals for US Shoppers</h1>
+  <p class="subtitle">Handpicked, high-rated products with great value – updated for February 2026</p>
+
+  <div class="filters">
+    <button class="filter-btn active" data-cat="all">All Categories</button>
+    <button class="filter-btn" data-cat="tech">Tech & Electronics</button>
+    <button class="filter-btn" data-cat="kitchen">Kitchen & Dining</button>
+    <button class="filter-btn" data-cat="home">Home Essentials</button>
+    <button class="filter-btn" data-cat="beauty">Beauty & Personal Care</button>
+    <button class="filter-btn" data-cat="deals">Lightning Deals</button>
+  </div>
+
+  <div class="products-grid" id="productGrid"></div>
+
+</main>
+
+<footer>
+  <p>© 2026 cloudfly.shop • All rights reserved</p>
+  <p class="disclaimer">
+    cloudfly.shop is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. Amazon, Amazon Prime, the Amazon logo and Amazon.com are trademarks of Amazon.com, Inc. or its affiliates. Prices and availability are accurate as of the date/time indicated and are subject to change.
+  </p>
+</footer>
+
+<script>
+// █████████████████████████████████████████████████████████████████████
+// MEGA PRODUCT LIST – 40+ ITEMS – GAMING, HOME, TECH, KITCHEN, BEAUTY
+// █████████████████████████████████████████████████████████████████████
+const products = [
+  // ---------- ORIGINAL 6 ----------
+  {
+    title: "Apple AirPods Pro 2 (USB-C) with MagSafe Charging Case (2025 refresh)",
+    image: "https://m.media-amazon.com/images/I/61SUj2aKoEL._AC_SL1500_.jpg",
+    price: "229.00",
+    oldPrice: "249.00",
+    badge: "Lightning Deal",
+    category: "tech",
+    link: "https://amzn.to/example-airpods-pro-usbc"
+  },
+  {
+    title: "Ninja Creami Deluxe 11-in-1 Ice Cream & Frozen Drink Maker",
+    image: "https://m.media-amazon.com/images/I/71g2z+U3+QL._AC_SL1500_.jpg",
+    price: "219.99",
+    oldPrice: "249.99",
+    badge: "Best Seller",
+    category: "kitchen",
+    link: "https://amzn.to/example-ninja-creami-deluxe"
+  },
+  {
+    title: "Dyson V15s Detect Submarine Wet & Dry Cordless Vacuum",
+    image: "https://m.media-amazon.com/images/I/81N7O3uH9BL._AC_SL1500_.jpg",
+    price: "849.99",
+    oldPrice: "949.99",
+    badge: "New 2026 Model",
+    category: "home",
+    link: "https://amzn.to/example-dyson-v15s-submarine"
+  },
+  {
+    title: "Samsung 65\" Class S95D OLED 4K Smart TV (2025) – Anti-glare",
+    image: "https://m.media-amazon.com/images/I/81quRzlV2XL._AC_SL1500_.jpg",
+    price: "2,197.00",
+    oldPrice: "2,797.00",
+    badge: "Record Low",
+    category: "tech",
+    link: "https://amzn.to/example-samsung-s95d-65"
+  },
+  {
+    title: "Cosrx Advanced Snail 96 Mucin Power Essence – 100 ml",
+    image: "https://m.media-amazon.com/images/I/61aIvk5K+PL._AC_SL1500_.jpg",
+    price: "14.80",
+    oldPrice: "25.00",
+    badge: "Amazon Choice",
+    category: "beauty",
+    link: "https://amzn.to/example-cosrx-snail-mucin"
+  },
+  {
+    title: "Stanley Quencher H2.0 FlowState Tumbler 40 oz – Charcoal",
+    image: "https://m.media-amazon.com/images/I/61+olM2XyQL._AC_SL1500_.jpg",
+    price: "45.00",
+    oldPrice: "55.00",
+    badge: "Trending",
+    category: "home",
+    link: "https://amzn.to/example-stanley-quencher-40"
+  },
+
+  // ---------- GAMING PC / LAPTOPS / TECH (added from prompt) ----------
+  {
+    title: "Lenovo Legion Tower 5i – AI-Powered Gaming PC - Intel® Core Ultra 7 265F – RTX 5070 Ti – 32GB – 1TB",
+    image: "https://m.media-amazon.com/images/I/61OZyR5Oq6L._AC_SL1500_.jpg",
+    price: "2,111.15",
+    oldPrice: "2,399.00",
+    badge: "AI POWERED",
+    category: "tech",
+    link: "https://amzn.to/example-legion-tower5i"
+  },
+  {
+    title: "ASUS ROG Strix G16 (2025) Gaming Laptop, 16” FHD+ 165Hz, RTX 5060, Intel i7-14650HX, 16GB, 1TB",
+    image: "https://m.media-amazon.com/images/I/71j0C5CqZIL._AC_SL1500_.jpg",
+    price: "1,399.99",
+    oldPrice: "1,499.99",
+    badge: "FREE Crimson Desert",
+    category: "tech",
+    link: "https://amzn.to/example-rog-strix-g16"
+  },
+  {
+    title: "CyberPowerPC Gamer Xtreme VR Gaming PC, Intel i5-13400F, RTX 5060 8GB, 16GB DDR5, 1TB SSD",
+    image: "https://m.media-amazon.com/images/I/71Vb6H7VjUL._AC_SL1500_.jpg",
+    price: "983.59",
+    oldPrice: "1,099.99",
+    badge: "Overall Pick",
+    category: "tech",
+    link: "https://amzn.to/example-cyberpowerpc"
+  },
+  {
+    title: "WOLFBOX MF50 Compressed Air Duster – 110000RPM Electric Blower for PC/Keyboard",
+    image: "https://m.media-amazon.com/images/I/71k3Y-3H47L._AC_SL1500_.jpg",
+    price: "31.99",
+    oldPrice: "39.99",
+    badge: "40K+ bought",
+    category: "tech",
+    link: "https://amzn.to/example-wolfbox"
+  },
+  {
+    title: "msi Codex Z2 Gaming Desktop: AMD R7-8700F, RTX 5070, 32GB DDR5, 2TB SSD",
+    image: "https://m.media-amazon.com/images/I/81QeGfV0n6L._AC_SL1500_.jpg",
+    price: "1,886.67",
+    oldPrice: "2,049.99",
+    badge: "RTX 50 Series",
+    category: "tech",
+    link: "https://amzn.to/example-msi-codexz2"
+  },
+  {
+    title: "acer Nitro V Gaming Laptop, i5-13420H, RTX 4050, 15.6\" 165Hz, 8GB DDR5, 512GB SSD",
+    image: "https://m.media-amazon.com/images/I/71R8QyLF1PL._AC_SL1500_.jpg",
+    price: "649.99",
+    oldPrice: "749.99",
+    badge: "GamePass",
+    category: "tech",
+    link: "https://amzn.to/example-acernitrov"
+  },
+  {
+    title: "MSI Titan 18 HX AI A2XWJG – 18\" UHD+ 120Hz Mini LED, Core Ultra 9, RTX 5090, 64GB, 4TB",
+    image: "https://m.media-amazon.com/images/I/81e3Ix2J5ML._AC_SL1500_.jpg",
+    price: "8,899.00",
+    oldPrice: "9,299.00",
+    badge: "Flagship",
+    category: "tech",
+    link: "https://amzn.to/example-msititan"
+  },
+  {
+    title: "ASUS ROG Xbox Ally – 7\" 1080p 120Hz Handheld, AMD Ryzen Z2 A, 16GB, 512GB",
+    image: "https://m.media-amazon.com/images/I/61tr0p0Lq7L._AC_SL1500_.jpg",
+    price: "589.99",
+    oldPrice: "649.99",
+    badge: "Xbox GamePass",
+    category: "tech",
+    link: "https://amzn.to/example-rogally"
+  },
+  {
+    title: "KDD Headphone & Controller Stand with Wireless Charging, RGB",
+    image: "https://m.media-amazon.com/images/I/71USjFLx3iL._AC_SL1500_.jpg",
+    price: "32.26",
+    oldPrice: "34.95",
+    badge: "RGB",
+    category: "tech",
+    link: "https://amzn.to/example-kddstand"
+  },
+  {
+    title: "Exquisite Gaming: Call of Duty Monkeybomb Controller/Cable Guy Holder",
+    image: "https://m.media-amazon.com/images/I/61DMS5BLlKL._AC_SL1500_.jpg",
+    price: "24.99",
+    oldPrice: "29.99",
+    badge: "2.2K★",
+    category: "tech",
+    link: "https://amzn.to/example-codholder"
+  },
+  {
+    title: "BladeHawks Extra Large RGB Gaming Mouse Pad 31.5x12\", 14 light modes",
+    image: "https://m.media-amazon.com/images/I/71uAXlD0VNL._AC_SL1500_.jpg",
+    price: "16.99",
+    oldPrice: "19.99",
+    badge: "1K+ month",
+    category: "tech",
+    link: "https://amzn.to/example-bladehawks"
+  },
+  {
+    title: "CYBERPOWERPC Gamer Master, Ryzen 5 5500, RX 6400, 16GB DDR4, 500GB SSD",
+    image: "https://m.media-amazon.com/images/I/71Df-fZ0ZtL._AC_SL1500_.jpg",
+    price: "719.99",
+    oldPrice: "799.99",
+    badge: "Budget pick",
+    category: "tech",
+    link: "https://amzn.to/example-gamermaster"
+  },
+  {
+    title: "Govee Smart LED Light Bars, RGBICWW WiFi TV Backlights",
+    image: "https://m.media-amazon.com/images/I/613I8y2xQbL._AC_SL1500_.jpg",
+    price: "39.99",
+    oldPrice: "49.99",
+    badge: "Works with Alexa",
+    category: "home",
+    link: "https://amzn.to/example-goveelight"
+  },
+  {
+    title: "LEGO Super Mario Game Boy – Retro Building Set for Adults",
+    image: "https://m.media-amazon.com/images/I/61k8akQbmdL._AC_SL1500_.jpg",
+    price: "59.80",
+    oldPrice: "69.99",
+    badge: "10K+ bought",
+    category: "deals",
+    link: "https://amzn.to/example-legogameboy"
+  },
+  {
+    title: "ROG NUC (2025) Mini PC, Core Ultra 9, RTX 5080 Mobile, 32GB, 2TB",
+    image: "https://m.media-amazon.com/images/I/71K2bZwYAyL._AC_SL1500_.jpg",
+    price: "3,199.00",
+    oldPrice: "3,499.00",
+    badge: "Compact Beast",
+    category: "tech",
+    link: "https://amzn.to/example-rognuc"
+  },
+  {
+    title: "Xbox Wireless Gaming Controller (2025) – Carbon Black",
+    image: "https://m.media-amazon.com/images/I/61gM-0PpKGL._AC_SL1500_.jpg",
+    price: "49.06",
+    oldPrice: "64.99",
+    badge: "Best Seller",
+    category: "tech",
+    link: "https://amzn.to/example-xboxctrl2025"
+  },
+  {
+    title: "acer Nitro V 15, i7-13620H, RTX 4050, 16GB, 1TB, 165Hz",
+    image: "https://m.media-amazon.com/images/I/71R8QyLF1PL._AC_SL1500_.jpg",
+    price: "949.99",
+    oldPrice: "1,049.99",
+    badge: "GamePass",
+    category: "tech",
+    link: "https://amzn.to/example-nitrov2"
+  },
+  {
+    title: "Nex Playground - Active Play System for Kids & Families",
+    image: "https://m.media-amazon.com/images/I/71Uo9iGGdtL._AC_SL1500_.jpg",
+    price: "249.00",
+    oldPrice: "279.99",
+    badge: "Active Fun",
+    category: "deals",
+    link: "https://amzn.to/example-nexplay"
+  },
+  {
+    title: "Razer BlackShark V2 X Gaming Headset, 7.1 Surround, 50mm Drivers",
+    image: "https://m.media-amazon.com/images/I/61Ml8Y-yqOL._AC_SL1500_.jpg",
+    price: "34.99",
+    oldPrice: "49.99",
+    badge: "24.9K★",
+    category: "tech",
+    link: "https://amzn.to/example-razerheadset"
+  },
+  {
+    title: "HUANUO Dual Monitor Stand, Full Motion, 13-32\"",
+    image: "https://m.media-amazon.com/images/I/71bYFSTXZ-L._AC_SL1500_.jpg",
+    price: "51.14",
+    oldPrice: "69.99",
+    badge: "33K+ ratings",
+    category: "home",
+    link: "https://amzn.to/example-huanuostand"
+  },
+  {
+    title: "Acer Nitro V 16S AI Gaming Laptop – RTX 5060, Ryzen 7 260, 32GB, 1TB",
+    image: "https://m.media-amazon.com/images/I/71G0oVrZg6L._AC_SL1500_.jpg",
+    price: "1,199.99",
+    oldPrice: "1,299.99",
+    badge: "AI ready",
+    category: "tech",
+    link: "https://amzn.to/example-nitro16s"
+  },
+  {
+    title: "Frigidaire Gaming Mini Beverage Fridge, 6 can, LED lights",
+    image: "https://m.media-amazon.com/images/I/61eyZ2kMx6L._AC_SL1500_.jpg",
+    price: "37.41",
+    oldPrice: "49.99",
+    badge: "Gamer setup",
+    category: "home",
+    link: "https://amzn.to/example-frigidairegaming"
+  },
+  {
+    title: "ASUS ROG G700 (2025) Desktop, Core Ultra 7 265KF, RTX 5070, 32GB",
+    image: "https://m.media-amazon.com/images/I/71KJ9jHy6HL._AC_SL1500_.jpg",
+    price: "1,899.99",
+    oldPrice: "2,099.99",
+    badge: "Next-Gen",
+    category: "tech",
+    link: "https://amzn.to/example-rogg700"
+  },
+  {
+    title: "Alienware 16 Aurora Gaming Laptop, RTX 5050, i7-240H, 16GB, 1TB",
+    image: "https://m.media-amazon.com/images/I/71yJ28cEmlL._AC_SL1500_.jpg",
+    price: "1,024.99",
+    oldPrice: "1,249.99",
+    badge: "Alienware",
+    category: "tech",
+    link: "https://amzn.to/example-alienware16"
+  },
+  {
+    title: "Razer BlackShark V2 X Xbox Edition Headset",
+    image: "https://m.media-amazon.com/images/I/61Ml8Y-yqOL._AC_SL1500_.jpg",
+    price: "31.99",
+    oldPrice: "37.99",
+    badge: "Xbox licensed",
+    category: "tech",
+    link: "https://amzn.to/example-razerxbox"
+  },
+
+  // ---------- HOME ESSENTIALS, KITCHEN, BEDDING, DECOR (from prompt) ----------
+  {
+    title: "Bedsure King Size Comforter Set – 3 Pieces, Warm Fluffy, Grey",
+    image: "https://m.media-amazon.com/images/I/71eZjHcNQyL._AC_SL1500_.jpg",
+    price: "49.99",
+    oldPrice: "69.99",
+    badge: "Home Favorite",
+    category: "home",
+    link: "https://amzn.to/example-bedsure"
+  },
+  {
+    title: "Simple Houseware 6-Tier Over The Door Organizer, Clear",
+    image: "https://m.media-amazon.com/images/I/81q4JQ1f9fL._AC_SL1500_.jpg",
+    price: "23.97",
+    oldPrice: "29.99",
+    badge: "Storage",
+    category: "home",
+    link: "https://amzn.to/example-doororganizer"
+  },
+  {
+    title: "Cuisinart 14-Cup Food Processor, Brushed Stainless",
+    image: "https://m.media-amazon.com/images/I/71P+q6z-lzL._AC_SL1500_.jpg",
+    price: "179.00",
+    oldPrice: "199.00",
+    badge: "Kitchen Pro",
+    category: "kitchen",
+    link: "https://amzn.to/example-cuisinart"
+  },
+  {
+    title: "Amazon Basics Microfiber Cleaning Cloths, 36-Pack",
+    image: "https://m.media-amazon.com/images/I/81RzqC1rJML._AC_SL1500_.jpg",
+    price: "13.99",
+    oldPrice: "16.99",
+    badge: "Bestseller",
+    category: "home",
+    link: "https://amzn.to/example-microfiber"
+  },
+  {
+    title: "CeraVe Hydrating Facial Cleanser, 19 oz, Twin Pack",
+    image: "https://m.media-amazon.com/images/I/71oKQJzYf1L._AC_SL1500_.jpg",
+    price: "28.97",
+    oldPrice: "34.99",
+    badge: "Skincare",
+    category: "beauty",
+    link: "https://amzn.to/example-cerave"
+  },
+  {
+    title: "KitchenAid Classic Series 5-Speed Blender, Onyx Black",
+    image: "https://m.media-amazon.com/images/I/61v1kS-p4WL._AC_SL1500_.jpg",
+    price: "79.00",
+    oldPrice: "99.99",
+    badge: "Kitchen",
+    category: "kitchen",
+    link: "https://amzn.to/example-kitchenaidblend"
+  },
+  {
+    title: "Squatty Potty Toilet Stool, Bamboo Finish",
+    image: "https://m.media-amazon.com/images/I/81z4QnCokTL._AC_SL1500_.jpg",
+    price: "29.50",
+    oldPrice: "35.00",
+    badge: "HSA/FSA",
+    category: "home",
+    link: "https://amzn.to/example-squatty"
+  },
+  {
+    title: "Fujifilm Instax Mini 12 Instant Camera, Blossom Pink",
+    image: "https://m.media-amazon.com/images/I/61yMYD9or4L._AC_SL1500_.jpg",
+    price: "68.00",
+    oldPrice: "79.00",
+    badge: "Viral",
+    category: "deals",
+    link: "https://amzn.to/example-instax12"
+  },
+  {
+    title: "L'Oreal Paris Voluminous Lash Paradise Mascara, 2-Pack",
+    image: "https://m.media-amazon.com/images/I/71IMQyd5+aL._AC_SL1500_.jpg",
+    price: "16.98",
+    oldPrice: "22.99",
+    badge: "Beauty",
+    category: "beauty",
+    link: "https://amzn.to/example-loreal"
+  },
+  {
+    title: "Cascade Platinum Dishwasher Pods, 78 Count",
+    image: "https://m.media-amazon.com/images/I/81pMl2s28SL._AC_SL1500_.jpg",
+    price: "19.99",
+    oldPrice: "24.99",
+    badge: "Household",
+    category: "home",
+    link: "https://amzn.to/example-cascade"
+  },
+  {
+    title: "Anker 525 Charging Station, 7-Port USB, 60W",
+    image: "https://m.media-amazon.com/images/I/61JIt4PwqtL._AC_SL1500_.jpg",
+    price: "39.99",
+    oldPrice: "49.99",
+    badge: "Tech essential",
+    category: "tech",
+    link: "https://amzn.to/example-ankerstation"
+  },
+  {
+    title: "Yankee Candle Large Jar, Balsam & Cedar, 22 oz",
+    image: "https://m.media-amazon.com/images/I/81A2wA-vnLL._AC_SL1500_.jpg",
+    price: "24.99",
+    oldPrice: "32.99",
+    badge: "Home scent",
+    category: "home",
+    link: "https://amzn.to/example-yankee"
+  }
+];
+
+// ---------- RENDER & FILTER LOGIC ----------
+function renderProducts(list = products) {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+
+  list.forEach(p => {
+    const card = document.createElement('a');
+    card.href = p.link;
+    card.target = "_blank";
+    card.rel = "sponsored noopener noreferrer";
+    card.className = 'product-card';
+
+    const badge = p.badge ? `<div class="deal-badge">${p.badge}</div>` : '';
+
+    card.innerHTML = `
+      <div class="product-image-wrap">
+        <img class="product-image" src="${p.image}" alt="${p.title}" loading="lazy">
+      </div>
+      ${badge}
+      <div class="product-body">
+        <h3 class="product-title">${p.title}</h3>
+        <div class="price-block">
+          <span class="current-price">$${p.price}</span>
+          ${p.oldPrice ? `<span class="was-price">$${p.oldPrice}</span>` : ''}
+        </div>
+        <button class="view-deal-btn">View Deal on Amazon →</button>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+// Category filtering
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cat = btn.dataset.cat;
+    const filtered = cat === 'all' ? products : products.filter(p => p.category === cat);
+    renderProducts(filtered);
+  });
+});
+
+// Live search
+document.getElementById('search').addEventListener('input', e => {
+  const term = e.target.value.toLowerCase().trim();
+  const filtered = products.filter(p => p.title.toLowerCase().includes(term));
+  renderProducts(filtered);
+});
+
+// Initial render
+renderProducts();
+</script>
+</body>
+</html>
